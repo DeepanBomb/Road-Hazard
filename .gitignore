@@ -1,0 +1,34 @@
+# Environments
+venv/
+env/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.DS_Store
+
+# Uploads & Data
+uploads/
+test_images/
+runs/
+*.db
+*.sqlite3
+
+# Large Media Files
+*.mp4
+*.jpg
+*.jpeg
+*.png
+
+# Ignore test files
+test_img.jpg
+test_upload.py
+
+# Models (Optional: Un-comment if you don't want to upload large weights)
+# model/

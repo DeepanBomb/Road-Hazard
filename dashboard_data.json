@@ -1,0 +1,54 @@
+{
+  "total_potholes": 8,
+  "total_repair_cost": 33969,
+  "hazards": [
+    {
+      "hazard_type": "pothole",
+      "severity": "Severe",
+      "severity_score": 0.20993663947912747,
+      "estimated_repair_cost": 4198
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Medium",
+      "severity_score": 0.1338093854152258,
+      "estimated_repair_cost": 2676
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Medium",
+      "severity_score": 0.09870594626669595,
+      "estimated_repair_cost": 1974
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Medium",
+      "severity_score": 0.139643721531535,
+      "estimated_repair_cost": 2792
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Severe",
+      "severity_score": 0.4294780086981107,
+      "estimated_repair_cost": 8589
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Severe",
+      "severity_score": 0.36363919141246154,
+      "estimated_repair_cost": 7272
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Severe",
+      "severity_score": 0.20042621506296562,
+      "estimated_repair_cost": 4008
+    },
+    {
+      "hazard_type": "pothole",
+      "severity": "Medium",
+      "severity_score": 0.12301405318821677,
+      "estimated_repair_cost": 2460
+    }
+  ]
+}
