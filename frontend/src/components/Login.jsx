@@ -20,7 +20,7 @@ export default function Login() {
     formData.append('password', password);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/login', formData);
+      const response = await axios.post('https://road-hazard.onrender.com/api/login', formData);
       localStorage.setItem('token', response.data.token);
       navigate('/dashboard');
     } catch {

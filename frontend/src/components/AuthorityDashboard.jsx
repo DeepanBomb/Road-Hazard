@@ -37,7 +37,7 @@ export default function AuthorityDashboard() {
 
   const fetchReports = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/reports');
+      const res = await axios.get('https://road-hazard.onrender.com/api/reports');
       setReports(res.data);
     } catch (err) {
       console.error("Error fetching reports", err);
@@ -48,7 +48,7 @@ export default function AuthorityDashboard() {
 
   const handleResolve = async (id) => {
     try {
-      await axios.patch(`http://localhost:8000/api/reports/${id}/resolve`);
+      await axios.patch(`https://road-hazard.onrender.com/api/reports/${id}/resolve`);
       fetchReports();
     } catch {
       alert("Failed to resolve report");
@@ -260,7 +260,7 @@ export default function AuthorityDashboard() {
                             }`}>
                                 {report.severity_label}
                             </p>
-                            <img src={`http://localhost:8000${report.image_path}`} alt="Hazard" className="w-full h-32 object-cover rounded-md mt-1 mb-3 shadow-inner" />
+                            <img src={`https://road-hazard.onrender.com${report.image_path}`} alt="Hazard" className="w-full h-32 object-cover rounded-md mt-1 mb-3 shadow-inner" />
                             <p className="mb-3 text-slate-600"><strong>Est. Cost:</strong> ₹{report.estimated_cost}</p>
                             {report.status === 'reported' ? (
                                 <button 
@@ -323,8 +323,8 @@ export default function AuthorityDashboard() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-16 w-24">
-                          <img className="h-16 w-24 rounded-lg object-cover cursor-pointer hover:opacity-80 transition shadow-md border border-slate-700" src={`http://localhost:8000${report.image_path}`} alt="" 
-                               onClick={() => window.open(`http://localhost:8000${report.image_path}`, '_blank')} />
+                          <img className="h-16 w-24 rounded-lg object-cover cursor-pointer hover:opacity-80 transition shadow-md border border-slate-700" src={`https://road-hazard.onrender.com${report.image_path}`} alt="" 
+                               onClick={() => window.open(`https://road-hazard.onrender.com${report.image_path}`, '_blank')} />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-bold text-slate-200 capitalize">{report.hazard_type}</div>

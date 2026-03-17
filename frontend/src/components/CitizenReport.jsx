@@ -59,7 +59,7 @@ export default function CitizenReport() {
     formData.append('gps_long', location.lng);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/reports', formData, {
+      const response = await axios.post('https://road-hazard.onrender.com/api/reports', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setResult(response.data);

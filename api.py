@@ -16,7 +16,7 @@ app = FastAPI(title="Road Hazard Monitoring API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "https://road-hazard.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
