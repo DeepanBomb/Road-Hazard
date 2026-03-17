@@ -50,7 +50,7 @@ export default function AuthorityDashboard() {
     try {
       await axios.patch(`http://localhost:8000/api/reports/${id}/resolve`);
       fetchReports();
-    } catch (err) {
+    } catch {
       alert("Failed to resolve report");
     }
   };

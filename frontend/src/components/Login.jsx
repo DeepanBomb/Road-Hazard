@@ -23,7 +23,7 @@ export default function Login() {
       const response = await axios.post('http://localhost:8000/api/login', formData);
       localStorage.setItem('token', response.data.token);
       navigate('/dashboard');
-    } catch (err) {
+    } catch {
       setError('Invalid authorization credentials');
     } finally {
       setLoading(false);
