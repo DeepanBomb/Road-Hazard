@@ -9,21 +9,30 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_WEIGHTS_PATH = os.path.join(BASE_DIR, "model", "best1.pt")
 
-# 1. Initialize YOLO (Custom Potholes)
-print("Loading YOLOv8 Custom Model...")
-try:
-    yolo_model = YOLO(DEFAULT_WEIGHTS_PATH)
-except Exception as e:
-    print(f"Warning: Could not load YOLO: {e}")
-    yolo_model = None
+yolo_model = None
+resnet_model = None
 
-# 2. Initialize ResNet50 (Fallback Generalized Hazards)
-print("Loading Hazard AI Model (ResNet50 + OpenCV)...")
-try:
-    resnet_model = ResNet50(weights='imagenet')
-except Exception as e:
-    print(f"Warning: Could not load ResNet50: {e}")
-    resnet_model = None
+def get_yolo():
+    global yolo_model
+    if yolo_model is None:
+        print("Loading YOLOv8 Custom Model...")
+        try:
+            from ultralytics import YOLO
+            yolo_model = YOLO(DEFAULT_WEIGHTS_PATH)
+        except Exception as e:
+            print(f"Warning: Could not load YOLO: {e}")
+    return yolo_model
+
+def get_resnet():
+    global resnet_model
+    if resnet_model is None:
+        print("Loading Hazard AI Model (ResNet50 + OpenCV)...")
+        try:
+            from tensorflow.keras.applications.resnet50 import ResNet50
+            resnet_model = ResNet50(weights='imagenet')
+        except Exception as e:
+            print(f"Warning: Could not load ResNet50: {e}")
+    return resnet_model
 
 def detect_waterlogging(image_path):
     """
@@ -48,9 +57,10 @@ def detect_hazard(image_path, weights_path=DEFAULT_WEIGHTS_PATH):
     detections = []
     
     # --- PHASE 1: PRECISION YOLO (Highest Priority) ---
-    if yolo_model is not None:
+    current_yolo = get_yolo()
+    if current_yolo is not None:
         try:
-            results = yolo_model(image_path)
+            results = current_yolo(image_path)
             for r in results:
                 for box in r.boxes:
                     confidence = float(box.conf[0])
@@ -74,14 +84,15 @@ def detect_hazard(image_path, weights_path=DEFAULT_WEIGHTS_PATH):
         })
         
     # --- PHASE 3: GENERALIZED RESNET (Fallback) ---
-    if resnet_model is not None and not any(d["class"] == "pothole" for d in detections):
+    current_resnet = get_resnet()
+    if current_resnet is not None and not any(d["class"] == "pothole" for d in detections):
         try:
             img = image.load_img(image_path, target_size=(224, 224))
             x = image.img_to_array(img)
             x = np.expand_dims(x, axis=0)
             x = preprocess_input(x)
             
-            preds = resnet_model.predict(x)
+            preds = current_resnet.predict(x)
             decoded = decode_predictions(preds, top=3)[0]
             hazard_keywords = ['hole', 'crater', 'debris', 'mud', 'rock', 'stone', 'log', 'tree', 'crack', 'street']
             
