@@ -19,16 +19,17 @@ def get_yolo():
             print(f"Warning: Could not load YOLO: {e}")
     return yolo_model
 
-def get_resnet():
-    global resnet_model
-    if resnet_model is None:
-        print("Loading Hazard AI Model (ResNet50 + OpenCV)...")
-        try:
-            from tensorflow.keras.applications.resnet50 import ResNet50
-            resnet_model = ResNet50(weights='imagenet')
-        except Exception as e:
-            print(f"Warning: Could not load ResNet50: {e}")
-    return resnet_model
+# ResNet fallback disabled to reduce memory usage on free hosting
+# def get_resnet():
+#     global resnet_model
+#     if resnet_model is None:
+#         print("Loading Hazard AI Model (ResNet50 + OpenCV)...")
+#         try:
+#             from tensorflow.keras.applications.resnet50 import ResNet50
+#             resnet_model = ResNet50(weights='imagenet')
+#         except Exception as e:
+#             print(f"Warning: Could not load ResNet50: {e}")
+#     return resnet_model
 
 def detect_waterlogging(image_path):
     """
@@ -79,32 +80,9 @@ def detect_hazard(image_path, weights_path=DEFAULT_WEIGHTS_PATH):
             "bbox": [0, 0, 600, 600] 
         })
         
-    # --- PHASE 3: GENERALIZED RESNET (Fallback) ---
-    current_resnet = get_resnet()
-    if current_resnet is not None and not any(d["class"] == "pothole" for d in detections):
-        try:
-            from tensorflow.keras.preprocessing import image
-            from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
-            
-            img = image.load_img(image_path, target_size=(224, 224))
-            x = image.img_to_array(img)
-            x = np.expand_dims(x, axis=0)
-            x = preprocess_input(x)
-            
-            preds = current_resnet.predict(x)
-            decoded = decode_predictions(preds, top=3)[0]
-            hazard_keywords = ['hole', 'crater', 'debris', 'mud', 'rock', 'stone', 'log', 'tree', 'crack', 'street']
-            
-            for _class_id, label, prob in decoded:
-                label_lower = label.lower()
-                if any(keyword in label_lower for keyword in hazard_keywords) and prob > 0.15:
-                    detections.append({
-                        "class": label_lower if 'hole' not in label_lower else 'pothole',
-                        "confidence": float(prob),
-                        "bbox": [50, 50, 300, 300] 
-                    })
-        except Exception as e:
-            print(f"Error during ResNet inference: {e}")
+    # --- PHASE 3: GENERALIZED RESNET (Disabled to save memory on free hosting) ---
+    # ResNet + TensorFlow requires ~500MB+ RAM which causes OOM on Render free tier
+    # YOLO + OpenCV waterlogging detection is sufficient for production use
 
     # --- PHASE 4: LAST RESORT FALLBACK ---
     if len(detections) == 0:

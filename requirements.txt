@@ -5,5 +5,4 @@ sqlalchemy==2.0.48
 pydantic==2.12.5
 ultralytics==8.4.22
 opencv-python-headless
-tensorflow-cpu
 numpy<2.1
