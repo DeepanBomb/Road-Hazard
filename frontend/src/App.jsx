@@ -23,7 +23,7 @@ function App() {
             </div>
 
             <div className="space-x-1 md:space-x-4 flex items-center shrink-0">
-              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">Submit Hazard Report</Link>
+              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">Submit Report</Link>
               <Link to="/dashboard" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">Authority Portal</Link>
             </div>
           </div>
