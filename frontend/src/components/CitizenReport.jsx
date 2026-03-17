@@ -72,7 +72,7 @@ export default function CitizenReport() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-slate-800/60 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 p-6 md:p-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="w-full max-w-md bg-slate-800/60 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 p-5 sm:p-6 md:p-8 animate-in fade-in slide-in-from-bottom-8 duration-700 overflow-hidden">
         <div className="flex items-center justify-center gap-3 mb-8">
             <div className="bg-indigo-500/20 p-3 rounded-full border border-indigo-500/30">
                 <ShieldAlert className="text-indigo-400 w-8 h-8"/>
@@ -130,17 +130,17 @@ export default function CitizenReport() {
               <button
                   type="button"
                   onClick={getLocation}
-                  className="w-full flex justify-between items-center bg-slate-900/50 hover:bg-slate-800/80 p-4 rounded-xl border border-slate-700 transition-all focus:ring-2 focus:ring-indigo-500 focus:outline-none group-hove:border-slate-600"
+                  className="w-full flex justify-between items-center bg-slate-900/50 hover:bg-slate-800/80 p-3 sm:p-4 rounded-xl border border-slate-700 transition-all focus:ring-2 focus:ring-indigo-500 focus:outline-none group-hove:border-slate-600 gap-2 overflow-hidden"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-blue-500/20 p-2 rounded-lg">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="bg-blue-500/20 p-2 rounded-lg shrink-0">
                         <MapPin size={18} className="text-blue-400" />
                     </div>
-                    <span className={`text-sm font-medium ${location.lat ? 'text-slate-200 font-mono' : 'text-slate-400'}`}>
+                    <span className={`text-xs sm:text-sm font-medium truncate ${location.lat ? 'text-slate-200 font-mono' : 'text-slate-400'}`}>
                         {location.lat ? `${location.lat.toFixed(5)}, ${location.lng.toFixed(5)}` : "Acquire GPS Coordinates"}
                     </span>
                   </div>
-                  {location.lat && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded font-bold tracking-wider">LOCKED</span>}
+                  {location.lat && <span className="text-[10px] sm:text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded font-bold tracking-wider shrink-0">LOCKED</span>}
                 </button>
             </div>
 
