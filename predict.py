@@ -57,7 +57,7 @@ def detect_hazard(image_path, weights_path=DEFAULT_WEIGHTS_PATH):
     current_yolo = get_yolo()
     if current_yolo is not None:
         try:
-            results = current_yolo(image_path)
+            results = current_yolo(image_path, imgsz=320, verbose=False)
             for r in results:
                 for box in r.boxes:
                     confidence = float(box.conf[0])
